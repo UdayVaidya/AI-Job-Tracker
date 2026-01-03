@@ -23,7 +23,7 @@ const applicationSchema = new mongoose.Schema(
     jobType: {
       type: String,
       enum: ["Internship", "Full-time", "Part-time"],
-      default: "Internship"
+      default: "Full-time"
     },
 
     status: {
