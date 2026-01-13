@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 
+// this middleware is used to protect the routes
 export const protect = async (req, res, next) => {
   let token;
 

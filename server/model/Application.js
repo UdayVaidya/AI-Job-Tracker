@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// this schema is used to create a new application -> take user id, company, role, job type, status, job link and notes from the user and return the application data with timestamp
 const applicationSchema = new mongoose.Schema(
   {
     user: {

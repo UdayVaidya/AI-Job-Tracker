@@ -1,5 +1,6 @@
 import Application from "../model/Application.js";
 
+// this controller is used to create a new application
 export const createApplication = async (req, res) => {
   try {
     const { company, role, jobType, status, jobLink, notes } = req.body;
@@ -29,6 +30,7 @@ export const createApplication = async (req, res) => {
   }
 };
 
+// this controller is used to get all the applications
 export const getApplication = async (req, res) => {
   try {
     const applications = await Application.find({
@@ -44,6 +46,8 @@ export const getApplication = async (req, res) => {
   }
 };
 
+
+// this controller is used to update a application
 export const updateApplication = async (req, res) => {
   try {
     const application = await Application.findOne({ _id: req.params.id });
@@ -77,6 +81,7 @@ export const updateApplication = async (req, res) => {
   }
 };
 
+// this controller is used to delete a application
 export const deleteApplication = async (req, res) => {
   try {
     const application = await Application.findOne({ _id: req.params.id});

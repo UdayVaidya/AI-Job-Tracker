@@ -2,6 +2,7 @@ import User from "../model/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// this controller is used to register a new user -> take name, email and password from the user and return the user data
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -55,6 +56,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// this controller is used to login a user -> take email and password from the user and return the token and user data
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
