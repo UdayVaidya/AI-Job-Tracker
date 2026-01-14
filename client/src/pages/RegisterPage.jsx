@@ -2,13 +2,16 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const { login } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
+  if (user) return <Navigate to="/dashboard" />;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
