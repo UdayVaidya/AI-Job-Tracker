@@ -6,7 +6,7 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <div className="bg-gray-600 shadow p-4 flex justify-between rounded-2xl sticky top-0 z-50 m-2 mt-2">
+    <div className="bg-gray-600 shadow p-4 flex justify-between rounded-2xl sticky top-2 z-50 ">
       <Link 
         to="/" 
         className="text-2xl font-bold text-white hover:text-gray-800 transition-all duration-200"

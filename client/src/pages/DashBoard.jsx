@@ -2,22 +2,60 @@ import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import Navbar from '../components/Navbar'
+import { fetchApplication } from '../services/applicationService'
+import { useState, useEffect } from 'react'
+import API from '../services/api'
+import ApplicationCard from '../components/ApplicationCard'
 
 const DashBoard = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await API.get("/applications");
+        setApplications(res.data.applications || res.data); 
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
 
   if (!user) {
     return <Navigate to="/" replace />
   }
 
   return (
-    <div className="mx-auto p-4">
+    <>
       <Navbar />
-      <h2 className="font-semibold mt-4 text-white text-center text-4xl">
-        Welcome back, <span className="text-emerald-500">{user.name}</span>
-      </h2>
-    </div>
-  )
+      <div className="p-6">
+        <h2 className="text-3xl font-semibold mb-4 text-white">
+          Your Applications 📁
+        </h2>
+
+        {loading && <p>Loading...</p>}
+
+        {!loading && applications.length === 0 && (
+          <p className="text-gray-600">
+            No applications found. Add one tomorrow! ✨
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {applications.map((app) => (
+            <ApplicationCard key={app._id} app={app} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default DashBoard
