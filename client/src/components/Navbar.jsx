@@ -34,11 +34,11 @@ const Navbar = () => {
 
         {user && (
           <>
-            <span className="text-white animate-pulse">Hello, {user.name.split(" ")[0]}</span>
+            <span className="text-white  text-2xl">Hello, {user.name.split(" ")[0]}</span>
             
             <button 
               onClick={logout}
-              className="bg-red-500 hover:bg-white hover:text-red-500 transition-all duration-300 text-white px-3 py-1 rounded"
+              className="bg-red-500 hover:bg-white hover:text-red-500 transition-all duration-300 text-white px-3 py-1 rounded text-xl"
             >
               Logout
             </button>
