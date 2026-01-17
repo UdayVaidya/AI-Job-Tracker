@@ -71,6 +71,7 @@ export const updateApplication = async (req, res) => {
     );
 
     return res.status(200).json({
+      application: updatedApplication,
       message: "Application is updated",
     });
   } catch (error) {

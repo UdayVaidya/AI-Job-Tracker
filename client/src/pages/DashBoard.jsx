@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
-import { fetchApplication } from "../services/applicationService";
 import { useState, useEffect } from "react";
 import API from "../services/api";
 import ApplicationCard from "../components/ApplicationCard";
@@ -13,6 +12,24 @@ const DashBoard = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showApplication, setShowApplication] = useState(false);
+  const [editingApp, setEditingApp] = useState(null)
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this application?")) return;
+  
+    try {
+      await API.delete(`/applications/${id}`);
+      setApplications(prev => prev.filter(app => app._id !== id));
+    } catch (err) {
+      alert("Delete failed");
+    }
+  };
+  
+  const handleEdit= (id) => { 
+    const appToEdit = applications.find(app => app._id === id);
+    setEditingApp(appToEdit);
+  }
+
 
   useEffect(() => {
     const getData = async () => {
@@ -58,17 +75,37 @@ const DashBoard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {applications.map((app) => (
-            <ApplicationCard key={app._id} app={app} />
+            <ApplicationCard 
+            key={app._id} 
+            app={app} 
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+            />
           ))}
         </div>
       </div>
 
       {showApplication && (
         <ApplicationForm
+          title="Add New Application"
+          state={"Submitted"}
           onClose={() => setShowApplication(false)}
           onSuccess={(newApp) => {
             setApplications(prev => [newApp, ...prev]);
             setShowApplication(false);
+          }}
+        />
+      )}
+
+      {editingApp && (
+        <ApplicationForm
+          title="Update Application"
+          state={"Updated"}
+          initialData={editingApp}
+          onClose={() => setEditingApp(null)}
+          onSuccess={(updatedApp) => {
+            setApplications(prev => prev.map(app => app._id === updatedApp._id ? updatedApp : app));
+            setEditingApp(null);
           }}
         />
       )}
