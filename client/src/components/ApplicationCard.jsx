@@ -1,5 +1,6 @@
 import React from "react";
 import { RiDeleteBin5Line, RiEdit2Line } from "react-icons/ri";
+import { useMemo } from "react";
 
 const ApplicationCard = ({ app, onDelete, onEdit }) => {
   const statusStyles = {
@@ -9,52 +10,69 @@ const ApplicationCard = ({ app, onDelete, onEdit }) => {
     Rejected: "bg-red-100 text-red-600",
   };
 
+  function generateLightColor() {
+    const r = Math.floor(Math.random() * 106) + 150; // 150–255
+    const g = Math.floor(Math.random() * 106) + 150;
+    const b = Math.floor(Math.random() * 106) + 150;
+
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  const cardColor = useMemo(() => generateLightColor(), []);
+
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all">
+    <div
+      className="text-gray-900 rounded-2xl border-2 border-white p-5 shadow-sm hover:shadow-md transition-all hover:border-blue-500 hover:scale-3d"
+      style={{ backgroundColor: cardColor }}
+    >
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold ">
             {app.company || "Company Name"}
           </h3>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <p className="text-sm  mt-0.5">
             {app.role} • {app.jobType}
           </p>
         </div>
 
         {/* Status */}
         <span
-          className={`px-3 py-1 text-xs rounded-full font-medium ${statusStyles[app.status] || "bg-gray-100 text-gray-600"}`}
+          className={`px-3 py-1 text-xs rounded-full font-medium ${
+            statusStyles[app.status] || "bg-gray-100 "
+          }`}
         >
           {app.status}
         </span>
       </div>
 
       {/* Divider */}
-      <div className="my-3 border-t border-gray-100" />
-
+      <div
+        className="my-3 border-t w-full"
+        style={{ backgroundColor: cardColor }}
+      />
       {/* Notes */}
-      {app.notes && (
-        <p className="text-sm text-gray-600 line-clamp-2">{app.notes}</p>
-      )}
+      {app.notes && <p className="text-sm  line-clamp-2">{app.notes}</p>}
 
       {/* Footer */}
       <div className="flex items-center justify-between mt-4">
-        <p className="text-xs text-gray-400">Updated just now</p>
+        <p className="text-xs ">Updated just now</p>
 
         <div className="flex items-center gap-3">
           {/* Edit */}
-          <button 
-          onClick={() => onEdit(app._id)}
-          className="p-2 rounded-lg hover:bg-gray-100 text-blue-600">
-            <RiEdit2Line size={24}/>
+          <button
+            onClick={() => onEdit(app._id)}
+            className="p-2 rounded-lg hover:bg-gray-100 text-blue-600"
+          >
+            <RiEdit2Line size={24} />
           </button>
 
           {/* Delete */}
-          <button 
-          onClick={() => onDelete(app._id)}
-          className="p-2 rounded-lg hover:bg-red-100 text-red-500">
-            <RiDeleteBin5Line size={24}/>
+          <button
+            onClick={() => onDelete(app._id)}
+            className="p-2 rounded-lg hover:bg-red-100 text-red-500"
+          >
+            <RiDeleteBin5Line size={24} />
           </button>
 
           {/* View Job */}

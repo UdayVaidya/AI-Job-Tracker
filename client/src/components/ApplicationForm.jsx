@@ -74,9 +74,9 @@ const ApplicationForm = ({ onSuccess, onClose, initialData, title, state }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center ">
+    <div className="fixed inset-0 backdrop-blur-xl bg-opacity-50 flex justify-center items-center ">
       <div className="bg-white p-6 shadow w-full max-w-xl max-h-xl h-[55%] overflow-x-auto rounded-2xl flex flex-col justify-around ">
-        <h2 className=" mb-4 text-4xl font-extrabold text-gray-800">
+        <h2 className=" mb-4 text-4xl font-extrabold text-[#363636]">
           {title} 
         </h2>
 

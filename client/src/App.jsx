@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <div className="min-h-screen bg-gray-800 p-4">
+        <div className="min-h-screen breathing-dark-bg p-4">
           <Routes>
             <Route path="/" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>

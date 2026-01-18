@@ -3,9 +3,10 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { Link, Navigate } from "react-router-dom";
+import AuthLayout from "../Layout/AuthLayout";
 
 const LoginPage = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: '', password: '' });
   const { login } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -29,32 +30,46 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center ">
-      <div className="max-w-md rounded-2xl p-4 bg-white flex justify-evenly flex-col items-center  min-h-[50%]  ">
-        <h2 className="font-bold text-7xl mb-8 text-gray-800">Login</h2>
-        {error && <p className="text-red-600">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <AuthLayout side="left">
+      <div className="p-8 md:p-12 flex flex-col justify-center ">
+            <h1 className="font-bold text-5xl md:text-6xl mb-4 text-[#535353] tracking-wide">
+              Welcome Back
+            </h1>
+
+            {error && <p className="text-red-600 mb-4">{error}</p>}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <input
             name="email"
             placeholder="Email"
-            className="w-full border p-2 text-gray-800 rounded placeholder-gray-800"
+            className="w-full border p-3 text-gray-800 rounded-lg focus:ring-2 focus:ring-gray-400 outline-none"
             onChange={handleChange}
           />
-          <input
-            name="password"
-            placeholder="Password"
-            type="password"
-            className="w-full border p-2 text-gray-800 rounded placeholder-gray-800"
-            onChange={handleChange}
-          />
-          <button className="w-full bg-gray-800 hover:bg-gray-400 text-white p-2 rounded">
-            Submit
-          </button>
-        </form>
-        <p className="text-gray-800">Don't have an account? <Link to="/register" className="text-gray-800 font-bold hover:text-gray-400" >Register</Link></p>
-      </div>
-    </div>
-  );
-}
 
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="w-full border p-3 text-[#575757] rounded-lg focus:ring-2 focus:ring-gray-400 outline-none"
+                onChange={handleChange}
+              />
+
+              <button className="w-full bg-[#575757] hover:bg-[#4a4a4a] text-xl transition text-white p-3 rounded-lg tracking-wide">
+                Login
+              </button>
+            </form>
+
+            <p className="text-gray-700 mt-6">
+              Don’t have an account?{" "}
+              <Link to="/register" className="font-bold hover:text-gray-900">
+                Register
+              </Link>
+            </p>
+          </div>
+    </AuthLayout>
+
+
+  );
+
+}
 export default LoginPage

@@ -3,13 +3,15 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { Link, Navigate } from "react-router-dom";
+import AuthLayout from "../Layout/AuthLayout.jsx";
+import LoaderComponent from "../components/LoaderComponent.jsx";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   if (user) return <Navigate to="/dashboard" />;
 
@@ -19,6 +21,7 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await API.post("/auth/register", form);
       login(res.data.user, res.data.token);
@@ -27,49 +30,65 @@ const RegisterPage = () => {
       console.error("Register error:", error);
       setError(
         error.response?.data?.message ||
-          error.message ||
-          "Error Registering !!!"
+        error.message ||
+        "Error Registering !!!"
       );
     }
+    setLoading(false);
   };
 
   return (
-    <div className="h-screen flex justify-center items-center ">
-      <div className="max-w-md rounded-2xl p-4 bg-white flex justify-evenly flex-col items-center  min-h-[50%]  ">
-        <h2 className="font-bold text-7xl mb-8 text-gray-800">Register</h2>
-        {error && <p className="text-red-600">{error}</p>}
+    <AuthLayout side="right">
+      {loading && (
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-20 rounded-2xl">
+          <LoaderComponent />
+        </div>
+      )}
+      
+      {/* RIGHT: Register */}
+      <div className="p-8 md:p-12 flex flex-col justify-center-safe">
+        <h1 className="font-bold text-5xl md:text-6xl mb-4 text-[#535353] tracking-wide">
+          Hi, Welcome
+        </h1>
+
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="name"
-            placeholder="Name"
-            className="w-full border p-2 text-gray-800 rounded placeholder-gray-800"
+            placeholder="Full Name"
+            className="w-full border p-3 text-gray-800 rounded-lg focus:ring-2 focus:ring-gray-400 outline-none"
             onChange={handleChange}
           />
+
           <input
             name="email"
             placeholder="Email"
-            className="w-full border p-2 text-gray-800 rounded placeholder-gray-800"
+            className="w-full border p-3 text-gray-800 rounded-lg focus:ring-2 focus:ring-gray-400 outline-none"
             onChange={handleChange}
           />
+
           <input
             name="password"
-            placeholder="Password"
             type="password"
-            className="w-full border p-2 text-gray-800 rounded placeholder-gray-800"
+            placeholder="Password"
+            className="w-full border p-3 text-[#575757] rounded-lg focus:ring-2 focus:ring-gray-400 outline-none"
             onChange={handleChange}
           />
-          <button className="w-full bg-gray-800 hover:bg-gray-400 text-white p-2 rounded">
+
+          <button className="w-full bg-[#575757] hover:bg-[#4a4a4a] text-xl transition text-white p-3 rounded-lg tracking-wide">
             Register
           </button>
         </form>
-        <p className="text-gray-800">
+
+        <p className="text-gray-700 mt-6">
           Already have an account?{" "}
-          <Link to="/" className="text-gray-800 font-bold hover:text-gray-400">
+          <Link to="/" className="font-bold hover:text-gray-900">
             Login
           </Link>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 
