@@ -5,12 +5,12 @@ export default function AuthLayout({ children, side = "left" }) {
 
     return (
         <div className="h-screen overflow-hidden flex items-center justify-center px-4 ">
-            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl shadow-2xl overflow-hidden h-[40vh] md:h-[60vh]">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 bg-white text-black rounded-2xl shadow-2xl overflow-hidden min-h-[40vh] md:min-h-[60vh]">
 
                 {/* LEFT */}
                 {!isRight && (
                     <div
-                        className={`hidden md:flex items-center justify-center bg-white relative overflow-hidden
+                        className={`flex items-center justify-center bg-white text-black relative overflow-hidden
                       ${isRight ? "anim-left" : "anim-right"}`}
                     >
 
@@ -35,7 +35,7 @@ export default function AuthLayout({ children, side = "left" }) {
                 {/* RIGHT */}
                 {isRight && (
                     <div
-                        className={`hidden md:flex items-center justify-center bg-white relative overflow-hidden
+                        className={`flex items-center justify-center bg-white relative overflow-hidden
                       ${isRight ? "anim-left" : "anim-right"}`}
                     >
 

@@ -8,23 +8,15 @@ export const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({
-        message: "all fields required !!!!",
-      });
+      return res.status(400).json({ message: "All fields required" });
     }
 
-    // Check if user exist or not
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({
-        message: "User already exists",
-      });
+      return res.status(400).json({ message: "User already exists" });
     }
 
-    // genarating salt for the hashed password
     const salt = await bcrypt.genSalt(10);
-
-    // hasshing of password happens here
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await User.create({
@@ -32,8 +24,15 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
+    
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
 
     return res.status(201).json({
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -42,19 +41,10 @@ export const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-
-    // MongoDB duplicate key error
-    if (error.code === 11000) {
-      return res.status(409).json({
-        message: "Email already registered",
-      });
-    }
-
-    res.status(500).json({
-      message: "Server error",
-    });
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // this controller is used to login a user -> take email and password from the user and return the token and user data
 export const loginUser = async (req, res) => {

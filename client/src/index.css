@@ -32,6 +32,12 @@ body{
   overflow: hidden;
 }
 
+.breathing-dark-bg.dashboard-scrollable {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 @keyframes shimmerNoise {
   0% {
     background-position: 0% 0%;

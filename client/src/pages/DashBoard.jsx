@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import API from "../services/api";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationForm from "../components/ApplicationForm";
+import ApplicationInsights from "../components/ApplicationInsight";
+
+const COLORS = ["#3B82F6", "#FACC15", "#22C55E", "#EF4444"];
 
 const DashBoard = () => {
   const { user } = useContext(AuthContext);
@@ -51,7 +54,7 @@ const DashBoard = () => {
     return <Navigate to="/" replace />;
   }
 
-  const filterApplications = applications.filter((app) => 
+  const filterApplications = applications.filter((app) =>
     app.company.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     app.role.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
@@ -59,8 +62,8 @@ const DashBoard = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
-    }, 300); 
-  
+    }, 300);
+
     return () => clearTimeout(handler);
   }, [search]);
 
@@ -74,29 +77,50 @@ const DashBoard = () => {
   //     controller.abort();
   //   };
   // }, [debouncedSearch]);
-  
-  
+
+  const stats = applications.reduce(
+    (acc, app) => {
+      acc[app.status] = (acc[app.status] || 0) + 1;
+      return acc;
+    },
+    { Applied: 0, Interview: 0, Offer: 0, Rejected: 0 }
+  );
+
+  const chartData = [
+    { name: "Applied", value: stats.Applied },
+    { name: "Interview", value: stats.Interview },
+    { name: "Offer", value: stats.Offer },
+    { name: "Rejected", value: stats.Rejected },
+  ];
+
+
+
 
   return (
     <>
       <Navbar />
-      <div className="p-6 ">
-        <div className="flex justify-center items-center">
-          <input
-            type="text"
-            placeholder="Search applications..."
-            className="mb-4 p-2 border border-gray-300 placeholder:text-gray-400 text-white rounded-lg w-full md:w-1/2 bg-gray-700 hover:border-blue-600 focus:border-blue-600 focus:outline-none transition duration-300 ease-in-out"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+      <div className="container mx-auto px-4 py-8">
+        <ApplicationInsights
+          stats={stats}
+          chartData={chartData}
+          COLORS={COLORS}
+        />
+        <div className="flex justify-center items-center m-2">
+            <input
+              type="text"
+              placeholder="Search applications..."
+              className="mb-4 p-2 border border-gray-300 placeholder:text-gray-400 text-white rounded-lg w-full md:w-1/2 bg-gray-700 hover:border-blue-600 focus:border-blue-600 focus:outline-none transition duration-300 ease-in-out"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
         <h2 className="text-3xl font-semibold mb-4 text-white">
           Your Applications 📁
         </h2>
 
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 mb-4"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform  mb-4"
           onClick={() => setShowApplication(true)}
         >
           + Add Application

@@ -52,7 +52,6 @@ const ApplicationForm = ({ onSuccess, onClose, initialData, title, state }) => {
         jobLink: "",
         notes: "",
       });
-      console.log(res.data);
       toast.success(`Application ${state} Successfully 🎉`, {
         position: "top-right",
         autoClose: 2000,
@@ -75,7 +74,7 @@ const ApplicationForm = ({ onSuccess, onClose, initialData, title, state }) => {
 
   return (
     <div className="fixed inset-0 backdrop-blur-xl bg-opacity-50 flex justify-center items-center ">
-      <div className="bg-white p-6 shadow w-full max-w-xl max-h-xl h-[55%] overflow-x-auto rounded-2xl flex flex-col justify-around ">
+      <div className="bg-white p-6 shadow w-full max-w-xl max-h-xl min-h-[55%]  rounded-2xl flex flex-col justify-around ">
         <h2 className=" mb-4 text-4xl font-extrabold text-[#363636]">
           {title} 
         </h2>
@@ -138,7 +137,7 @@ const ApplicationForm = ({ onSuccess, onClose, initialData, title, state }) => {
             onChange={handleChange}
           />
 
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between ">
             <button
               type="button"
               onClick={onClose}
