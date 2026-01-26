@@ -7,10 +7,10 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <div className="bg-gray-500 shadow p-2 md:p-4 flex justify-between items-center rounded-2xl sticky top-2 z-50 mx-2 md:mx-0">
+    <div className="backdrop-blur-2xl bg-opacity-50  shadow p-2 md:p-4 flex justify-between items-center rounded-2xl sticky top-2 z-50 mx-2 md:mx-0">
       <Link
         to="/"
-        className="flex items-center font-bold text-white hover:text-gray-800 transition-all duration-200"
+        className="flex items-center"
       >
         <img src={logo} alt="AI Job Tracker" className="h-8 w-auto md:h-10" />
       </Link>

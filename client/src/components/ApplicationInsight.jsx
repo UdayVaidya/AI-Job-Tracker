@@ -33,10 +33,10 @@ function ApplicationInsights({ stats = {}, chartData = [], COLORS = [] }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="relative bg-linear-to-br from-white/80 to-gray-50 backdrop-blur-xl p-8 rounded-3xl shadow-xl mb-10 border border-white/60"
+            className="relative inset-0 backdrop-blur-xl bg-opacity-50 p-8 rounded-3xl shadow-xl mb-10 border border-white/60"
         >
             {/* Glow */}
-            <div className="absolute -inset-1 bg-linear-to-r from-blue-400/20 to-purple-400/20 blur-2xl rounded-3xl -z-10" />
+            <div className="absolute -inset-1 bg-linear-to-r from-gray-400/20 to-amber-400/20 blur-2xl rounded-3xl -z-10" />
 
             <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -44,7 +44,7 @@ function ApplicationInsights({ stats = {}, chartData = [], COLORS = [] }) {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-10"
             >
-                <h3 className="text-3xl font-extrabold tracking-tight bg-linear-to-r from-gray-700 via-amber-500 to-gray-700  bg-clip-text text-transparent">
+                <h3 className="text-3xl font-extrabold tracking-tight bg-linear-to-r from-white via-amber-400 to-gray-200  bg-clip-text text-transparent">
                     Application Insights
                 </h3>
 

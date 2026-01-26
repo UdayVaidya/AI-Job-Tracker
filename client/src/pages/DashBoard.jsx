@@ -7,6 +7,7 @@ import API from "../services/api";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationForm from "../components/ApplicationForm";
 import ApplicationInsights from "../components/ApplicationInsight";
+import { motion } from "framer-motion";
 
 const COLORS = ["#3B82F6", "#FACC15", "#22C55E", "#EF4444"];
 
@@ -106,18 +107,36 @@ const DashBoard = () => {
           COLORS={COLORS}
         />
         <div className="flex justify-center items-center m-2">
-            <input
-              type="text"
-              placeholder="Search applications..."
-              className="mb-4 p-2 border border-gray-300 placeholder:text-gray-400 text-white rounded-lg w-full md:w-1/2 bg-gray-700 hover:border-blue-600 focus:border-blue-600 focus:outline-none transition duration-300 ease-in-out"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search applications..."
+            className="mb-4 p-2 border border-gray-300 placeholder:text-gray-400 text-white rounded-lg w-full md:w-1/2 bg-gray-700 hover:border-blue-600 focus:border-blue-600 focus:outline-none transition duration-300 ease-in-out"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-        <h2 className="text-3xl font-semibold mb-4 text-white">
-          Your Applications 📁
-        </h2>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-6"
+        >
+          <h2 className="
+            text-3xl md:text-4xl font-extrabold tracking-tight
+            bg-linear-to-r from-gray-400 via-amber-300 to-white
+            bg-clip-text text-transparent
+          ">
+            Your Applications
+          </h2>
+
+          <div className="
+            mt-2 h-[3px] w-24
+            bg-linear-to-r from-gray-500 to-amber-500
+            rounded-full
+          "/>
+        </motion.div>
+
 
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform  mb-4"
@@ -126,7 +145,7 @@ const DashBoard = () => {
           + Add Application
         </button>
 
-        {loading && <p>Loading...</p>}
+        {loading && <p className="text-white">Loading...</p>}
 
         {!loading && applications.length === 0 && (
           <div className="text-center text-gray-500 mt-10">

@@ -7,7 +7,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js"
 import applicationRoutes from "./routes/applicationRoutes.js";
-
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +31,8 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/ai", aiRoutes);
+
 
 
 app.get("/api/health", (req, res) => {
