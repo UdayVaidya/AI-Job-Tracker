@@ -26,15 +26,9 @@ app.use(morgan("dev"));
 
 
 
-// DataBase Connection with MongoDB using lazyDB connection
-let isConnected = false;
-app.use(async (req, res, next) => {
-  if (!isConnected) {
-    await connectDB();
-    isConnected = true;
-  }
-  next();
-});
+// DataBase Connection with MongoDB 
+connectDB();
+
 
 // API Routes of auth
 app.use("/api/auth", authRoutes);
