@@ -12,7 +12,7 @@ import aiRoutes from "./routes/aiRoutes.js";
 dotenv.config();
 
 const app = express();
-
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
@@ -21,11 +21,20 @@ app.use(cors({
   credentials: true,
 }));
 
+//  Morgan Middleware for logging
 app.use(morgan("dev"));
 
 
-// DataBase Connection with MongoDB
-connectDB();
+
+// DataBase Connection with MongoDB using lazyDB connection
+let isConnected = false;
+app.use(async (req, res, next) => {
+  if (!isConnected) {
+    await connectDB();
+    isConnected = true;
+  }
+  next();
+});
 
 // API Routes of auth
 app.use("/api/auth", authRoutes);
@@ -39,7 +48,6 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", message: "Server is healthy" });
 });
 
-const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

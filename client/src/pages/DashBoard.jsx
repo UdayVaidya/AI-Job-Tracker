@@ -8,6 +8,7 @@ import ApplicationCard from "../components/ApplicationCard";
 import ApplicationForm from "../components/ApplicationForm";
 import ApplicationInsights from "../components/ApplicationInsight";
 import { motion } from "framer-motion";
+import AIInsightsModal from "../components/AIInsightsModal";
 
 const COLORS = ["#3B82F6", "#FACC15", "#22C55E", "#EF4444"];
 
@@ -19,6 +20,8 @@ const DashBoard = () => {
   const [editingApp, setEditingApp] = useState(null);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [aiApp, setAIApp] = useState(null);
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this application?")) return;
@@ -161,6 +164,7 @@ const DashBoard = () => {
               app={app}
               onDelete={handleDelete}
               onEdit={handleEdit}
+              onAI={(app) => setAIApp(app)}
             />
           ))}
         </div>
@@ -192,6 +196,14 @@ const DashBoard = () => {
           }}
         />
       )}
+
+      {aiApp && (
+        <AIInsightsModal
+          app={aiApp}
+          onClose={() => setAIApp(null)}
+        />
+      )}
+
     </>
   );
 };

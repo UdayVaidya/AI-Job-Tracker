@@ -11,7 +11,7 @@ function AppContent() {
   const isDashboard = location.pathname === '/dashboard';
 
   return (
-    <div className={`${isDashboard ? 'h-screen' : 'min-h-screen'} breathing-dark-bg p-4 ${isDashboard ? 'dashboard-scrollable' : ''}`}>
+    <div className={`${isDashboard ? 'h-screen' : 'min-h-screen'} breathing-dark-bg p-4  ${isDashboard ? 'dashboard-scrollable' : ''}`}>
       <Routes>
         <Route path="/" element={<LoginPage />}/>
         <Route path="/register" element={<RegisterPage />}/>

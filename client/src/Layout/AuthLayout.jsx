@@ -1,11 +1,25 @@
 import LoginLottie from "../components/LoginLottie";
+import logo from '../assets/jobtrackermain.svg';
 
 export default function AuthLayout({ children, side = "left" }) {
     const isRight = side === "right";
 
     return (
-        <div className="h-screen overflow-hidden flex items-center justify-center px-4 ">
-            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 bg-white text-black rounded-2xl shadow-2xl overflow-hidden min-h-[40vh] md:min-h-[60vh]">
+        <div className="h-screen overflow-hidden flex flex-col items-center justify-start px-4 ">
+
+            <img
+                src={logo}
+                alt="Job Tracker Logo"
+                className="
+                h-24 md:h-28 mb-8 mt-8   
+                rounded-3xl
+                px-6 py-4
+                hover:scale-105 
+                transition-all duration-500 ease-out
+                "
+            />
+
+            <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 bg-white text-black rounded-2xl shadow-2xl overflow-hidden min-h-[40vh] md:min-h-[60vh] relative">
 
                 {/* LEFT */}
                 {!isRight && (

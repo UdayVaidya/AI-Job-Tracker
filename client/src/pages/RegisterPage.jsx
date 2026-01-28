@@ -81,7 +81,7 @@ const RegisterPage = () => {
           </button>
         </form>
 
-        <p className="text-gray-700 mt-6">
+        <p className="text-gray-700 mt-6 text-center">
           Already have an account?{" "}
           <Link to="/" className="font-bold hover:text-gray-900">
             Login

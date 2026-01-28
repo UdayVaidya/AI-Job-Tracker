@@ -1,8 +1,10 @@
 import React from "react";
-import { RiDeleteBin5Line, RiEdit2Line } from "react-icons/ri";
+import { RiDeleteBin5Line, RiEdit2Line} from "react-icons/ri";
+import { FaRobot } from "react-icons/fa";
 import { useMemo } from "react";
+import AIInsightsModal from "../components/AIInsightsModal";
 
-const ApplicationCard = ({ app, onDelete, onEdit }) => {
+const ApplicationCard = ({ app, onDelete, onEdit, onAI }) => {
   const statusStyles = {
     Applied: "bg-blue-100 text-blue-600",
     Interview: "bg-yellow-100 text-yellow-700",
@@ -38,9 +40,8 @@ const ApplicationCard = ({ app, onDelete, onEdit }) => {
 
         {/* Status */}
         <span
-          className={`px-3 py-1 text-xs rounded-full font-medium ${
-            statusStyles[app.status] || "bg-gray-100 "
-          }`}
+          className={`px-3 py-1 text-xs rounded-full font-medium ${statusStyles[app.status] || "bg-gray-100 "
+            }`}
         >
           {app.status}
         </span>
@@ -73,6 +74,13 @@ const ApplicationCard = ({ app, onDelete, onEdit }) => {
             className="p-2 rounded-lg hover:bg-red-100 text-red-500"
           >
             <RiDeleteBin5Line size={24} />
+          </button>
+
+          <button
+            onClick={() => onAI(app)}
+            className="p-2 rounded-lg text-purple-500 hover:bg-purple-100 "
+          >
+            <FaRobot size={24}/>
           </button>
 
           {/* View Job */}
